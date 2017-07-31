@@ -26,37 +26,12 @@ class SalesEngine
     @customers = CustomerRepository.new(self)
   end
 
-
   def self.from_csv(input)
     created = SalesEngine.new(input)
     input.each_pair do |key, value|
       row = CSV.open value, headers: true, header_converters: :symbol
-      binding.pry
-      case key
-      when :items
-        row.each do |data|
-          created.items.add_data(data.to_hash)
-        end
-      when  :merchants
-        row.each do |data|
-          created.merchants.add_data(data.to_hash)
-        end
-      when :invoices
-        row.each do |data|
-          created.invoices.add_data(data.to_hash)
-        end
-      when :transactions
-        row.each do |data|
-          created.transactions.add_data(data.to_hash)
-        end
-      when :invoice_items
-        row.each do |data|
-          created.invoice_items.add_data(data.to_hash)
-        end
-      when :customers
-        row.each do |data|
-          created.customers.add_data(data.to_hash)
-        end
+      row.each do |data|
+        created.send(key).add_data(data.to_hash)
       end
     end
     created
