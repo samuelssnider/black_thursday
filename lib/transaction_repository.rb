@@ -1,4 +1,3 @@
-require 'pry'
 require 'csv'
 require_relative '../lib/transaction'
 
@@ -33,9 +32,7 @@ class TransactionRepository
 
   def from_csv(path)
     rows = CSV.open path, headers: true, header_converters: :symbol
-    rows.each do |data|
-      add_data(data)
-    end
+    rows.each {|data| add_data(data)}
   end
 
   def add_data(data)

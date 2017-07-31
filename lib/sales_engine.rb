@@ -31,6 +31,7 @@ class SalesEngine
     created = SalesEngine.new(input)
     input.each_pair do |key, value|
       row = CSV.open value, headers: true, header_converters: :symbol
+      binding.pry
       case key
       when :items
         row.each do |data|
