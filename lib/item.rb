@@ -9,8 +9,8 @@ class Item
               :updated_at,
               :dollars
 
-  def initialize(data, sales_engine)
-    @sales_engine = sales_engine
+  def initialize(data, item_repo)
+    @repo = item_repo
     @id = data[:id].to_i
     @name = data[:name]
     @description = data[:description]

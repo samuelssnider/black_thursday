@@ -40,15 +40,18 @@ class MerchantRepository
   end
 
   def find_all_items(id)
-    @sales_engine.items.find_all_by_merchant_id(id)
+    @sales_engine.items_find_all_by_merchant_id(id)
   end
 
   def find_all_invoices(id)
-    @sales_engine.invoices.find_all_by_merchant_id(id)
+    @sales_engine.invoices_find_all_by_merchant_id(id)
   end
 
-  def find_all_customers
-    @sales_engine.customers.find_by_id(id)
+  def find_customer(id)
+    binding.pry
+    @sales_engine.customer_find_by_id(id)
   end
+
+
 
 end
