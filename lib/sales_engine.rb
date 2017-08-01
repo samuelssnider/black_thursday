@@ -18,12 +18,12 @@ class SalesEngine
               :customers
 
   def initialize(data)
-    @items = ItemRepository.new(self)
-    @merchants = MerchantRepository.new(self)
-    @invoices = InvoiceRepository.new(self)
-    @transactions = TransactionRepository.new(self)
+    @items         = ItemRepository.new(self)
+    @merchants     = MerchantRepository.new(self)
+    @invoices      = InvoiceRepository.new(self)
+    @transactions  = TransactionRepository.new(self)
     @invoice_items = InvoiceItemRepository.new(self)
-    @customers = CustomerRepository.new(self)
+    @customers     = CustomerRepository.new(self)
   end
 
   def self.from_csv(input)
