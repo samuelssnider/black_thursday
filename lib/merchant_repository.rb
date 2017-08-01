@@ -2,7 +2,8 @@ require_relative '../lib/merchant'
 
 class MerchantRepository
 
-  attr_reader :merchants
+  attr_reader :merchants,
+              :sales_engine
 
   def initialize(sales_engine)
     @sales_engine = sales_engine

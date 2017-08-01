@@ -1,7 +1,8 @@
 
 require_relative '../lib/item'
 class ItemRepository
-  attr_reader :items
+  attr_reader :items,
+              :sales_engine
 
   def initialize(sales_engine)
     @sales_engine = sales_engine
@@ -51,11 +52,15 @@ class ItemRepository
   end
 
   def add_data(data)
-    @items << Item.new(data.to_hash, @sales_engine)
+    @items << Item.new(data.to_hash, self)
   end
 
   def inspect
     "#<#{self.class} #{@items.size} rows>"
+  end
+
+  def find_merchant_by_id(merch_id)
+    @sales_engine.merchant_by_id(merch_id)
   end
 
 end

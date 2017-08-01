@@ -3,7 +3,8 @@ require_relative '../lib/transaction'
 
 class TransactionRepository
 
-  attr_reader :transactions
+  attr_reader :transactions,
+              :sales_engine
 
   def initialize(sales_engine)
     @sales_engine = sales_engine

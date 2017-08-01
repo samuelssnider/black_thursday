@@ -2,7 +2,8 @@ require_relative '../lib/invoice'
 
 class InvoiceRepository
 
-  attr_reader :invoices
+  attr_reader :invoices,
+              :sales_engine
 
   def initialize(sales_engine)
     @sales_engine = sales_engine

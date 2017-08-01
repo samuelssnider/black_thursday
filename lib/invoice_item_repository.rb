@@ -4,7 +4,8 @@ require 'pry'
 require 'csv'
 class InvoiceItemRepository
 
-  attr_reader :invoice_items
+  attr_reader :invoice_items,
+              :sales_engine
 
   def initialize(sales_engine)
     @sales_engine = sales_engine
