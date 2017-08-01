@@ -248,21 +248,38 @@ class SalesAnalyst
     merchant = @sales_engine.merchants.find_by_id(merchant_id)
     invoices = merchant.invoices
     invoices_ii = invoices.map do |invoice|
-      invoice.invoice_items.group_by do |invoice_item|
-        invoice_item.item_id
+      if invoice.is_paid_in_full?
+        invoice.invoice_items.group_by do |invoice_item|
+          invoice_item.item_id
+        end
       end
-    end
+    end.compact
     it_id_counts = Hash.new(0)
-    save = invoices_ii.map do |invoice_ii|
-      invoice_ii.each_pair do |item_id, invoice_items|
-        it_id_counts.merge!({item_id => invoice_items.length})
+    invoices_ii.each do |invoice_ii|
+      invoice_ii.each_pair do |id, iis|
+         it_id_counts.merge!({id => iis.count})
       end
     end
     binding.pry
+    # invoices_ii.each do |invoice_ii|
+    #   invoice_ii.each_pair do |item_id, invoice_items|
+    #     it_id_counts += ({item_id => invoice_items.length})
+    #   end
+    # end
   end
 
 
   def best_item_for_merchant(merchant_id) #=> item (in terms of revenue generated)
+    all_invoices = @sales_engine.merchant_find_by_id(merchant_id).invoices
+    item_revenue = Hash.new(0)
+    all_invoices.each do |invoice|
+      if invoice.is_paid_in_full?
+        invoice.invoice_items.each do |invoice_item|
+          item_revenue.merge!({invoice_item.item_id => invoice_item.unit_price *invoice_item.quantity})
+        end
+      end
+    end
+    binding.pry
   end
 
   def grab(all_merchant_revenues, number = all_merchant_revenues.count)
@@ -304,11 +321,11 @@ class SalesAnalyst
   end
 
   def merchants_with_only_one_item_registered_in_month(month)
-    @sales_engine.merchants.all.find_all do |merchant|
-      invoices = merchant.invoices
+    @sales_engine.merchants_all.find_all do |merchant|
+      items = merchant.items
       if merchant.created_at.strftime("%B") == month
-        invoices.one? do |invoice|
-          invoice.created_at.strftime("%B") == month
+        items.one? do |item|
+          item.created_at.strftime("%B") == month
         end
       else
         nil
