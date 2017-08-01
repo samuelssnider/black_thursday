@@ -19,8 +19,6 @@ class Merchant
 
   def invoices
     @repo.find_all_invoices(self.id)
-
-    # @repo.invoices.find_all_by_merchant_id(self.id)
   end
 
   def customers

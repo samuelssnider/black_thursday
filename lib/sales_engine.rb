@@ -113,7 +113,7 @@ class SalesEngine
     @invoice_items.find_all_by_item_id(item_id)
   end
 
-  def invoice_items.find_all_by_invoice(invoice_id)
+  def invoice_items_find_all_by_invoice(invoice_id)
     @invoice_items.find_all_by_invoice_id(invoice_id)
   end
 
