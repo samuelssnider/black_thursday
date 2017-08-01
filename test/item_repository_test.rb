@@ -42,9 +42,9 @@ class ItemRepositoryTest < Minitest::Test
     full_repo
     item = @repo.find_by_id(222)
     # binding.pry
-    # assert_instance_of Item, item
-    # assert_equal 12, item.merchant_id
-    # assert_equal "Hat", item.name
+    assert_instance_of Item, item
+    assert_equal 12, item.merchant_id
+    assert_equal "Hat", item.name
   end
 
   def test_find_by_name_working

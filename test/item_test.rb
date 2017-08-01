@@ -1,12 +1,8 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/emoji'
+require './test/test_helper'
 require_relative '../lib/item'
+require_relative '../lib/sales_engine'
 require 'bigdecimal'
 require 'time'
-require './lib/sales_engine'
 
 
 class ItemTest < Minitest::Test

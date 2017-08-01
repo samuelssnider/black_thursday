@@ -2,9 +2,10 @@ require 'simplecov'
 SimpleCov.start
 require 'minitest'
 require 'minitest/autorun'
-require 'minitest/pride'
+require 'minitest/emoji'
 require 'bigdecimal'
 require_relative '../lib/invoice_repository'
+require 'pry'
 
 class InvoiceRepositoryTest < Minitest::Test
 
@@ -62,11 +63,8 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_find_by_id_working
-    save_one = @invoice_r.find_by_id(123)
-    save_two = @invoice_r.find_by_id(125)
-
-    assert_equal @invoice_r.invoices[1], save_one
-    assert_equal @invoice_r.invoices[-1], save_two
+    actual  = @invoice_r.find_by_id(125)
+    assert_equal @invoice_r.invoices[-1], actual
   end
 
   def test_find_all_by_customer_id_returns_blank_if_none_match

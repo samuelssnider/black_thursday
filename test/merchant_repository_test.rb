@@ -9,10 +9,10 @@ class MerchantRepositoryTest < Minitest::Test
 
   def setup
     # @merchant_r = MerchantRepository.new(self)
-    hash_one   = {id:1, name: "Target"}
-    hash_two   = {id:2, name: "Walmart"}
-    hash_three = {id:3, name: "CostMart"}
-    hash_four  = {id:4, name: "Costco"}
+    hash_one   = {id:1, name: "Target", created_at: "2010-01-01", updated_at: "2011-01-01"}
+    hash_two   = {id:2, name: "Walmart", created_at: "2010-02-02", updated_at: "2011-02-02"}
+    hash_three = {id:3, name: "CostMart", created_at: "2010-03-03", updated_at: "2011-03-03"}
+    hash_four  = {id:4, name: "Costco", created_at: "2010-04-04", updated_at: "2011-04-04"}
     @merchant_r = MerchantRepository.new(self)
     @merchant_r.add_data(hash_one)
     @merchant_r.add_data(hash_two)
@@ -26,21 +26,6 @@ class MerchantRepositoryTest < Minitest::Test
     assert mr
     assert_instance_of MerchantRepository, mr
     assert mr.merchants.empty?
-  end
-
-  def test_data_can_be_added
-    mr = MerchantRepository.new(self)
-    hash_one = {
-    id: 12334113, name: "MiniatureBikez"}
-    hash_two = {
-    id: 12334115, name: "LolaMarleys"   }
-    mr.add_data(hash_one)
-    mr.add_data(hash_two)
-    assert_equal 2, mr.merchants.count
-    assert_equal 12334113, mr.merchants.first.id
-    assert_equal 12334115, mr.merchants.last.id
-    assert_equal "MiniatureBikez", mr.merchants.first.name
-    assert_equal "LolaMarleys", mr.merchants.last.name
   end
 
   def test_all_is_working
