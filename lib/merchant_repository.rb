@@ -48,7 +48,6 @@ class MerchantRepository
   end
 
   def find_customer(id)
-    binding.pry
     @sales_engine.customer_find_by_id(id)
   end
 
