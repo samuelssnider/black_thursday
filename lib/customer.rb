@@ -6,8 +6,8 @@ class Customer
               :last_name,
               :created_at,
               :updated_at
-  def initialize(hash, sales_engine)
-    @sales_engine = sales_engine
+  def initialize(hash, repo)
+    @repo         = repo
     @id           = hash[:id].to_i
     @first_name   = hash[:first_name]
     @last_name    = hash[:last_name]
