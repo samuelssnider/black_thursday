@@ -23,8 +23,8 @@ class Merchant
 
   def customers
     invoices.map do |invoice|
-      @repo.find_customer(self.id)
-    end
+      @repo.find_customer(invoice.customer_id)
+    end.uniq
   end
 
 end
