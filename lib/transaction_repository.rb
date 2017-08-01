@@ -37,22 +37,15 @@ class TransactionRepository
   end
 
   def add_data(data)
-    @transactions << Transaction.new(data.to_hash, @sales_engine)
+    @transactions << Transaction.new(data.to_hash, self)
   end
 
   def inspect
     "#<#{self.class} #{@transactions.size} rows>"
   end
 
-  # def find_all_by(query, arg, branch)
-  #   result = []
-  #   repo = get_instance_of(branch)
-  #   repo.each do |instance|
-  #     if instance.arg == query
-  #       result << instance
-  #     end
-  #   result
-  #   end
-  # end
+  def invoices_find_by_id(id)
+    @sales_engine.invoice_find_by_id(id)
+  end
 
 end

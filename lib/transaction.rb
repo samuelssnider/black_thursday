@@ -8,8 +8,8 @@ class Transaction
               :created_at,
               :updated_at
 
-  def initialize(data, sales_engine)
-    @sales_engine = sales_engine
+  def initialize(data, repo)
+    @repo = repo
     @id = data[:id].to_i
     @invoice_id = data[:invoice_id].to_i
     @credit_card_number = data[:credit_card_number].to_i
@@ -20,7 +20,7 @@ class Transaction
   end
 
   def invoice
-    @sales_engine.invoices.find_by_id(self.invoice_id)
+    @repo.invoices_find_by_id(self.invoice_id)
   end
 
 end

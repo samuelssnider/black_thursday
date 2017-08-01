@@ -6,8 +6,8 @@ class Invoice
               :status,
               :created_at,
               :updated_at
-  def initialize(data, sales_engine)
-    @sales_engine = sales_engine
+  def initialize(data, repo)
+    @repo         = repo
     @id           = data[:id].to_i
     @customer_id  = data[:customer_id].to_i
     @merchant_id  = data[:merchant_id].to_i
@@ -17,25 +17,30 @@ class Invoice
   end
 
   def merchant
-    @sales_engine.merchants.find_by_id(self.merchant_id)
+    # @sales_engine.merchants.find_by_id(self.merchant_id)
+    @repo.merchants_find_by_id(self.merchant_id)
   end
 
   def invoice_items
-    @sales_engine.invoice_items.find_all_by_invoice_id(self.id)
+    # @sales_engine.invoice_items.find_all_by_invoice_id(self.id)
+    @repo.invoice_items_find_all_by_invoice_id(self.id)
   end
 
   def items
     invoice_items.map do |ii|
-      @sales_engine.items.find_by_id(ii.item_id)
+      # @sales_engine.items.find_by_id(ii.item_id)
+      @repo.items_find_by_id(ii.item_id)
     end
   end
 
   def transactions
-    @sales_engine.transactions.find_all_by_invoice_id(self.id)
+    # @sales_engine.transactions.find_all_by_invoice_id(self.id)
+    @repo.transations_find_all_by_invoice_id(self.id)
   end
 
   def customer
-    @sales_engine.customers.find_by_id(self.customer_id)
+    # @sales_engine.customers.find_by_id(self.customer_id)
+    @repo.customer_find_by_id(self.customer_id)
   end
 
   def is_paid_in_full?

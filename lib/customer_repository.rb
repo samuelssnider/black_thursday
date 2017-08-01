@@ -36,7 +36,7 @@ class CustomerRepository
   end
 
   def add_data(data)
-    @customers << Customer.new(data.to_hash, @sales_engine)
+    @customers << Customer.new(data.to_hash, self)
   end
 
   def inspect

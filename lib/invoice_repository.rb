@@ -31,11 +31,34 @@ class InvoiceRepository
   end
 
   def add_data(data)
-    @invoices << Invoice.new(data.to_hash, @sales_engine)
+    @invoices << Invoice.new(data.to_hash, self)
   end
 
   def inspect
     "#<#{self.class} #{@invoices.size} rows>"
   end
+
+  def merchants_find_by_id(id)
+    @sales_engine.merchant_find_by_id(id)
+  end
+
+  def invoice_items_find_all_by_invoice_id(id)
+    @sales_engine.invoice_items_find_all_by_invoice(id)
+  end
+
+  def items_find_by_id(id)
+    @sales_engine.item_find_by_id(id)
+  end
+
+  def transations_find_all_by_invoice_id(id)
+    @sales_engine.transactions_find_all_by_invoice_id(id)
+  end
+
+  def customer_find_by_id(id)
+        # @sales_engine.customers.find_by_id(self.customer_id)
+    @sales_engine.customer_find_by_id(id)
+  end
+
+
 
 end

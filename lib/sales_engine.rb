@@ -142,7 +142,6 @@ class SalesEngine
   end
 
   def customer_find_by_id(id)
-    binding.pry
     @customers.find_by_id(id)
   end
 
