@@ -37,4 +37,87 @@ class SalesEngine
     created
   end
 
+  def merchants_all
+    @merchants.all
+  end
+
+  def merchant_find_by_id(id)
+    @merchants.find_by_id(id)
+  end
+
+  def merchant_find_by_name(name)
+    @merchants.find_by_name(name)
+  end
+
+  def merchants_find_all_by_name(name)
+    @merchants.find_all_by_name(name)
+  end
+
+  def items_all
+    @items.all
+  end
+
+  def item_find_by_id(id)
+    @items.find_by_id(id)
+  end
+
+  def item_find_by_name(name)
+    @items.find_by_name
+  end
+
+  def items_find_all_with_description(description)
+    @items.find_all_with_description(description)
+  end
+
+  def items_find_all_by_price
+    @items.find_all_by_price(price)
+  end
+
+  def items_find_all_by_price_in_range(range)
+    @items.find_all_by_price_in_range(range)
+  end
+
+  def items_find_all_by_merchant_id(id)
+    @items.find_all_by_merchant_id(id)
+  end
+
+  def invoices_all
+    @invoices.all
+  end
+
+  def invoice_find_by_id(id)
+    @invoices.find_by_id(id)
+  end
+
+  def invoices_find_all_by_customer_id(cust_id)
+    @invoices.find_all_by_customer_id(cust_id)
+  end
+
+  def invoices_find_all_by_merchant_id(merch_id)
+    @invoices.find_all_by_merchant_id(merch_id)
+  end
+
+  def invoices_find_all_by_status(status)
+    @invoices.find_all_by_status(status)
+  end
+
+  def invoice_items_all
+    @invoice_items.all
+  end
+
+  def invoice_item_find_by_id(id)
+    @invoice_items.find_by_id(id)
+  end
+
+  def invoice_items_find_all_by_item_id(item_id)
+    @invoice_items.find_all_by_item_id(item_id)
+  end
+
+  def invoice_items.find_all_by_invoice(invoice_id)
+    @invoice_items.find_all_by_invoice_id(invoice_id)
+  end
+
+
+
+
 end
