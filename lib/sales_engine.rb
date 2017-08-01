@@ -117,6 +117,41 @@ class SalesEngine
     @invoice_items.find_all_by_invoice_id(invoice_id)
   end
 
+  def transactions_all
+    @transactions.all
+  end
+
+  def transaction_find_by_id(id)
+    @transactions.find_by_id(id)
+  end
+
+  def transactions_find_all_by_invoice_id(invoice_id)
+    @transactions.find_all_by_invoice_id(invoice_id)
+  end
+
+  def transactions_find_all_by_credit_card_number(cc)
+    @transactions.find_all_by_credit_card_number
+  end
+
+  def transactions_find_all_by_result(result)
+    @transactions.find_all_by_result(result)
+  end
+
+  def customers_all
+    @customers.all
+  end
+
+  def customer_find_by_id
+    @customers.find_by_id(id)
+  end
+
+  def customers_find_all_by_first_name(f_name)
+    @customers.find_all_by_first_name(f_name)
+  end
+
+  def customers_find_all_by_last_name(l_name)
+    @customers.find_all_by_last_name(l_name)
+  end
 
 
 
