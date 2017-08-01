@@ -5,8 +5,8 @@ class Merchant
               :created_at,
               :updated_at
 
-  def initialize(data, sales_engine)
-    @sales_engine = sales_engine
+  def initialize(data, repo)
+    @repo = repo
     @id = data[:id].to_i
     @name = data[:name]
     @created_at = Time.parse(data[:created_at])
@@ -14,17 +14,18 @@ class Merchant
   end
 
   def items
-    items = @sales_engine.items.find_all_by_merchant_id(self.id)
-    items
+    @repo.find_all_items(self.id)
   end
 
   def invoices
-    @sales_engine.invoices.find_all_by_merchant_id(self.id)
+    @repo.find_all_invoices(self.id)
+
+    # @repo.invoices.find_all_by_merchant_id(self.id)
   end
 
   def customers
     invoices.map do |invoice|
-      @sales_engine.customers.find_by_id(invoice.customer_id)
+      @repo.find_all_customers(self.id)
     end.uniq
   end
 

@@ -35,7 +35,19 @@ class MerchantRepository
   end
 
   def add_data(data)
-    @merchants << Merchant.new(data.to_hash, @sales_engine)
+    @merchants << Merchant.new(data.to_hash, self)
+  end
+
+  def find_all_items(id)
+    @sales_engine.items.find_all_by_merchant_id(id)
+  end
+
+  def find_all_invoices(id)
+    @sales_engine.invoices.find_all_by_merchant_id(id)
+  end
+
+  def find_all_customers
+    @sales_engine.customers.find_by_id(id)
   end
 
 end
