@@ -167,42 +167,59 @@ class SalesAnalyst
   def merchant_revenue_by_item(merchant_id)
     merchant = @sales_engine.merchant_find_by_id(merchant_id)
     items    = merchant.items
-    items.map(Hash.new(0)) do |item|
-      ({item.id => item_tot_revenue})
+    item_revenues = Hash.new(0)
+    items.each do |item|
+      item_revenues[item.id] = item_tot_revenue(item.id)
+    end
+    item_revenues
+  end
+
+  def merchant_sales_by_item(merchant_id)
+    merchant = @sales_engine.merchant_find_by_id(merchant_id)
+    items    = merchant.items
+    item_totals = Hash.new(0)
+    items.each do |item|
+      item_totals[item.id] = item_tot_sales(item.id)
+    end
+    item_totals
+  end
+
+  def item_tot_revenue(item_id)
+    invoice_items = @sales_engine.invoice_items_find_all_by_item_id(item_id)
+    total = 0
+    invoice_items.each do |invoice_item|
+      if @sales_engine.invoice_find_by_id(invoice_item.invoice_id).is_paid_in_full?
+        total += (invoice_item.unit_price * invoice_item.quantity)
+      end
+    end
+    total
+  end
+
+  def item_tot_sales(item_id)
+    invoice_items = @sales_engine.invoice_items_find_all_by_item_id(item_id)
+    total = 0
+    invoice_items.each do |invoice_item|
+      if @sales_engine.invoice_find_by_id(invoice_item.invoice_id).is_paid_in_full?
+        total += (invoice_item.quantity)
+      end
     end
   end
 
 
   def most_sold_item_for_merchant(merchant_id) #=> [item] (in terms of quantity sold) or, if there is a tie, [item, item, item]
-    merchant = @sales_engine.merchant_find_by_id(merchant_id)
-    invoices = merchant.invoices
-    invoices_ii = invoices.map do |invoice|
-      if invoice.is_paid_in_full?
-        invoice.invoice_items.group_by do |invoice_item|
-          invoice_item.item_id
-        end
-      end
-    end.compact
-    it_id_counts = Hash.new(0)
-    invoices_ii.each do |invoice_ii|
-      invoice_ii.each_pair do |id, iis|
-         it_id_counts.merge!({id => iis.count})
-      end
+    item_totals = merchant_sales_by_item(merchant_id)
+    top = item_totals.max_by do |item_id, revenue|
+      revenue
     end
+    @sales_engine.item_find_by_id(top[0])
   end
 
-
-  def best_item_for_merchant(merchant_id) #=> item (in terms of revenue generated)
-    all_invoices = @sales_engine.merchant_find_by_id(merchant_id).invoices
-    item_revenue = Hash.new(0)
-    all_invoices.each do |invoice|
-      if invoice.is_paid_in_full?
-        invoice.invoice_items.each do |invoice_item|
-          hash = {invoice_item.item_id => (invoice_item.unit_price * invoice_item.quantity)}
-          item_revenue.merge!(hash)
-        end
-      end
+  def best_item_for_merchant(merchant_id)
+    item_revenues = merchant_revenue_by_item(merchant_id)
+    best = item_revenues.max_by do |item_id, revenue|
+      revenue
     end
+    @sales_engine.item_find_by_id(best[0])
   end
 
   def merchants_with_pending_invoices
