@@ -1,4 +1,6 @@
 require './test/test_helper'
+require 'pry'
+require 'csv'
 require './lib/customer_repository'
 
 class CustomerRepositoryTest < Minitest::Test
@@ -104,4 +106,12 @@ class CustomerRepositoryTest < Minitest::Test
     assert_equal 122, list.first.id
     assert_equal 125, list.last.id
   end
+
+  def test_from_csv_loading
+    repo = CustomerRepository.new(self)
+    repo.from_csv("./data/customers_short.csv")
+    assert_equal 10, repo.all.count
+  end
+
+
 end

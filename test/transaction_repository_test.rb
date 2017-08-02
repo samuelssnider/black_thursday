@@ -3,40 +3,60 @@ require_relative '../lib/transaction_repository'
 
 class TransactionRepositoryTest < Minitest::Test
 
+  def setup
+    @repo = TransactionRepository.new(self)
+  end
+
   def test_it_exists
-    repo = TransactionRepository.new(self)
-    assert_instance_of TransactionRepository, repo
+    assert_instance_of TransactionRepository, @repo
   end
 
   def test_it_has_transactions
-    repo = TransactionRepository.new(self)
-    assert_equal [], repo.transactions
+    assert_equal [], @repo.transactions
   end
 
   def test_it_can_load_transactions
-    repo = TransactionRepository.new(self)
-    repo.from_csv("./data/transactions_short.csv")
-    assert_equal 10, repo.transactions.count
+    @repo.from_csv("./data/transactions_short.csv")
+    assert_equal 10, @repo.transactions.count
   end
 
   def test_find_all
-    repo = TransactionRepository.new(self)
-    repo.from_csv("./data/transactions_short.csv")
-    assert_equal 10, repo.all.count
+    @repo.from_csv("./data/transactions_short.csv")
+    assert_equal 10, @repo.all.count
   end
 
   def test_find_by_id
-    repo = TransactionRepository.new(self)
-    repo.from_csv("./data/transactions_short.csv")
-    assert_equal 5555, repo.find_by_id(5).invoice_id
+    @repo.from_csv("./data/transactions_short.csv")
+    assert_equal 5555, @repo.find_by_id(5).invoice_id
   end
+
+  def test_find_all_by_invoice_id
+    @repo.from_csv("./data/transactions_short.csv")
+    assert_equal 2, @repo.find_all_by_invoice_id(8888).count
+  end
+
+  def test_transactions_find_all_by_credit_card_number
+    @repo.from_csv("./data/transactions_short.csv")
+    cc = 4839506591130408
+    assert_equal 2, @repo.find_all_by_credit_card_number(cc).count
+  end
+
+  def test_transactions_find_all_by_result
+    @repo.from_csv("./data/transactions_short.csv")
+    assert_equal 6, @repo.find_all_by_result("success").count
+  end
+
+  # def test_invoices_find_all_by_id
+  #   @repo.from_csv("./data/transactions_short.csv")
+  #   assert_equal 6, @repo.invoices_find_by_id(2).count
+  # end
 
 
 
   # def test_find_all_by_invoice_id
-  #   repo = TransactionRepository.new
-  #   repo.from_csv("./data/transactions_short.csv")
-  #   assert_equal "5555", repo.find_all_by_invoice_id("2222")
+  #   @repo = Transaction@repository.new
+  #   @repo.from_csv("./data/transactions_short.csv")
+  #   assert_equal "5555", @repo.find_all_by_invoice_id("2222")
   # end
 
 
