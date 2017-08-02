@@ -193,7 +193,7 @@ class SalesAnalyst
     invoice_items = @sales_engine.invoice_items_find_all_by_item_id(item_id)
     total = 0
     invoice_items.each do |invoice_item|
-      if @sales_engine.invoice_find_by_id(invoice_item.invoice_id).is_paid_in_full?
+      if @sales_engine.invoices_find_by_id(invoice_item.invoice_id).is_paid_in_full?
         total += (invoice_item.quantity)
       end
     end
