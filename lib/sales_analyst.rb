@@ -7,13 +7,22 @@ class SalesAnalyst
   attr_reader :sales_engine
   include Calculator
 
+  def average_invoices_per_merchant
+    merchants = @sales_engine.merchants_all.count
+    invoices = @sales_engine.invoices_all.count
+    (invoices / merchants.to_f).round(2)
+  end
+
   def initialize(sales_engine)
     @sales_engine = sales_engine
   end
 
-  def convert_date(input) #expected input: invoice object
-    Date.parse(input.created_at.to_s).strftime('%A')
+  def average_items_per_merchant
+    merchants = @sales_engine.merchants_all.count
+    items = @sales_engine.items_all.count
+    (items / merchants.to_f).round(2)
   end
+
 
   def top_days_by_invoice_count
     results = @sales_engine.invoices.all.group_by do |invoice|
@@ -25,36 +34,6 @@ class SalesAnalyst
       day_occurance.merge!({day => invoices.count})
     end
     find_top_days(day_occurance)
-  end
-
-
-  def find_top_days(day_occurance)
-    all_averages = day_occurance.values
-    s_dev = standard_deviance(all_averages)
-    mark = average_invoices_per_day + s_dev
-    top_days = []
-    day_occurance.each_pair do |day, invoices|
-      if invoices > mark
-        top_days << day
-      end
-    end
-    top_days
-  end
-
-  def average_invoices_per_day
-    @sales_engine.invoices_all.count / 7
-  end
-
-  def average_items_per_merchant
-    merchants = @sales_engine.merchants_all.count
-    items = @sales_engine.items_all.count
-    (items / merchants.to_f).round(2)
-  end
-
-  def average_invoices_per_merchant
-    merchants = @sales_engine.merchants_all.count
-    invoices = @sales_engine.invoices_all.count
-    (invoices / merchants.to_f).round(2)
   end
 
   def average_items_per_merchant_standard_deviation
@@ -96,6 +75,27 @@ class SalesAnalyst
     end
   end
 
+  def invoice_status(symbol)
+    total = @sales_engine.invoices_all.count
+    case symbol
+    when :pending
+      result = @sales_engine.invoices_all.count do |invoice|
+        invoice.status == :pending
+      end
+    when :shipped
+      result = @sales_engine.invoices_all.count do |invoice|
+        invoice.status == :shipped
+      end
+    when :returned
+      result = @sales_engine.invoices_all.count do |invoice|
+        invoice.status == :returned
+      end
+    end
+    decimal = result.to_f/total.to_f
+    percentage = decimal * 100
+    percentage.round(2)
+  end
+
 
   def average_item_price_for_merchant(id)
     merchant = @sales_engine.merchant_find_by_id(id)
@@ -131,37 +131,6 @@ class SalesAnalyst
     items
   end
 
-  def invoice_status(symbol)
-    total = @sales_engine.invoices_all.count
-    case symbol
-    when :pending
-      result = @sales_engine.invoices_all.count do |invoice|
-        invoice.status == :pending
-      end
-    when :shipped
-      result = @sales_engine.invoices_all.count do |invoice|
-        invoice.status == :shipped
-      end
-    when :returned
-      result = @sales_engine.invoices_all.count do |invoice|
-        invoice.status == :returned
-      end
-    end
-    decimal = result.to_f/total.to_f
-    percentage = decimal * 100
-    percentage.round(2)
-  end
-
-  # def all_averages(repo)
-  #   binding.pry
-  #   repo = @sales_engine.method(repo.to_sym).all
-  #   binding.pry
-  #   average_set = []
-  #   repo.each do |instance|
-  #     average_set << ({count: total_matches(instance.id), repo.to_sym instance})
-  #   end
-  # end
-
   def total_revenue_by_date(date)
     total = 0.0
     @sales_engine.invoices_all.each do |invoice|
@@ -172,7 +141,6 @@ class SalesAnalyst
     total
   end
 
-
   def all_merchant_averages
     repo = @sales_engine.merchants_all
     average_set = []
@@ -182,51 +150,12 @@ class SalesAnalyst
     average_set
   end
 
-  def all_invoice_averages
-    @sales_engine.merchants_all.map do |merchant|
-      merchant.invoices.count
-    end
-  end
-  #
-  # def average(data_set)
-  #   sum = 0
-  #   data_set.each do |average|
-  #     sum += average[:count]
-  #   end
-  #   average = (sum/data_set.count.to_f)
-  #   average.round(2)
-  # end
-
-  def total_matches(id)
-    count = @sales_engine.items_find_all_by_merchant_id(id).count
-    count
-  end
-
-
   def top_revenue_earners(number = 20)
     grab(merchants_by_revenue(invoices_by_merchant), number)
   end
 
-  def invoices_by_merchant
-    @sales_engine.merchants_all.map do |merchant|
-      merchant.invoices
-    end
-  end
-
   def merchants_ranked_by_revenue
     grab(merchants_by_revenue(invoices_by_merchant))
-  end
-
-  def merchants_by_revenue(invoice_by_m)
-    merchant_revenues = []
-    invoice_by_m.each do |helpers|
-      total = 0
-      helpers.each do |helper|
-        total += helper.total
-      end
-      merchant_revenues << {total => helpers.first.merchant}
-    end
-    merchant_revenues
   end
 
   def revenue_by_merchant(merchant_id)
@@ -261,11 +190,6 @@ class SalesAnalyst
       end
     end
     binding.pry
-    # invoices_ii.each do |invoice_ii|
-    #   invoice_ii.each_pair do |item_id, invoice_items|
-    #     it_id_counts += ({item_id => invoice_items.length})
-    #   end
-    # end
   end
 
 
@@ -281,27 +205,6 @@ class SalesAnalyst
       end
     end
     binding.pry
-  end
-
-  def grab(all_merchant_revenues, number = all_merchant_revenues.count)
-    revenues = all_merchant_revenues.map do |r|
-      r.keys
-    end
-    sorted   = revenues.sort_by          {|revenue| revenue}
-    all      = sorted[(-number)..-1]
-    sorted_merchants(all_merchant_revenues, all)
-  end
-
-  def sorted_merchants(all_merchant_revenues, list)
-    merchants = []
-     list.reverse.each do |s|
-      all_merchant_revenues.each do |r_m|
-        if r_m.keys == s
-          merchants << r_m.values
-        end
-      end
-    end
-    merchants.flatten
   end
 
   def merchants_with_pending_invoices
@@ -323,16 +226,86 @@ class SalesAnalyst
 
   def merchants_with_only_one_item_registered_in_month(month)
     @sales_engine.merchants_all.find_all do |merchant|
-      items = merchant.items
+      invoices = merchant.invoices
       if merchant.created_at.strftime("%B") == month
-        items.one? do |item|
-          item.created_at.strftime("%B") == month
+        invoices.one? do |invoice|
+          invoice.created_at.strftime("%B") == month
         end
-      else
-        nil
       end
     end
   end
 
+  private
+
+  def sorted_merchants(all_merchant_revenues, list)
+    merchants = []
+     list.reverse.each do |s|
+      all_merchant_revenues.each do |r_m|
+        if r_m.keys == s
+          merchants << r_m.values
+        end
+      end
+    end
+    merchants.flatten
+  end
+
+  def convert_date(input) #expected input: invoice object
+    Date.parse(input.created_at.to_s).strftime('%A')
+  end
+
+  def find_top_days(day_occurance)
+    all_averages = day_occurance.values
+    s_dev = standard_deviance(all_averages)
+    mark = average_invoices_per_day + s_dev
+    top_days = []
+    day_occurance.each_pair do |day, invoices|
+      if invoices > mark
+        top_days << day
+      end
+    end
+    top_days
+  end
+
+  def average_invoices_per_day
+    @sales_engine.invoices_all.count / 7
+  end
+
+  def grab(all_merchant_revenues, number = all_merchant_revenues.count)
+    revenues = all_merchant_revenues.map do |r|
+      r.keys
+    end
+    sorted   = revenues.sort_by          {|revenue| revenue}
+    all      = sorted[(-number)..-1]
+    sorted_merchants(all_merchant_revenues, all)
+  end
+
+  def merchants_by_revenue(invoice_by_m)
+    merchant_revenues = []
+    invoice_by_m.each do |helpers|
+      total = 0
+      helpers.each do |helper|
+        total += helper.total
+      end
+      merchant_revenues << {total => helpers.first.merchant}
+    end
+    merchant_revenues
+  end
+
+  def total_matches(id)
+    count = @sales_engine.items_find_all_by_merchant_id(id).count
+    count
+  end
+
+  def all_invoice_averages
+    @sales_engine.merchants_all.map do |merchant|
+      merchant.invoices.count
+    end
+  end
+
+  def invoices_by_merchant
+    @sales_engine.merchants_all.map do |merchant|
+      merchant.invoices
+    end
+  end
 
 end
