@@ -1,11 +1,13 @@
 require './test/test_helper'
 require './lib/merchant_repository'
 require 'csv'
+require_relative '../lib/sales_engine'
 
 class MerchantRepositoryTest < Minitest::Test
 
   def setup
     # @merchant_r = MerchantRepository.new(self)
+
     hash_one   = {id:1, name: "Target", created_at: "2010-01-01", updated_at: "2011-01-01"}
     hash_two   = {id:2, name: "Walmart", created_at: "2010-02-02", updated_at: "2011-02-02"}
     hash_three = {id:3, name: "CostMart", created_at: "2010-03-03", updated_at: "2011-03-03"}
@@ -15,6 +17,15 @@ class MerchantRepositoryTest < Minitest::Test
     @merchant_r.add_data(hash_two)
     @merchant_r.add_data(hash_three)
     @merchant_r.add_data(hash_four)
+
+    hash = {
+            :items         => "./data/sa/items_sa.csv",
+            :merchants     => "./data/sa/merchants_sa.csv",
+            :invoices      => "./data/sa/invoices_sa.csv",
+            :invoice_items => "./data/sa/invoice_items_sa.csv",
+            :customers     => "./data/sa/customers_sa.csv",
+            :transactions  => "./data/sa/transactions_sa.csv"}
+    @se_short= SalesEngine.from_csv(hash)
   end
 
 
@@ -69,6 +80,14 @@ class MerchantRepositoryTest < Minitest::Test
     merchant = MerchantRepository.new(self)
     merchant.from_csv("./data/merchants_short.csv")
     assert_equal 5, merchant.all.count
+  end
+
+  def test_find_customer
+    customers = @se_short.merchants_all.first.customers
+    assert_equal 3, customers.count
+    assert_instance_of Customer, customers.first
+    assert_instance_of Customer, customers.last
+
   end
 
 end

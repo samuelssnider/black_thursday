@@ -1,12 +1,22 @@
 require './test/test_helper'
 require './lib/item_repository'
+require './lib/sales_engine'
 require 'time'
 require 'pry'
 
 class ItemRepositoryTest < Minitest::Test
 
   def setup
-    @repo = ItemRepository.new(self)
+    hash = {
+            :items         => "./data/sa/items_sa.csv",
+            :merchants     => "./data/sa/merchants_sa.csv",
+            :invoices      => "./data/sa/invoices_sa.csv",
+            :invoice_items => "./data/sa/invoice_items_sa.csv",
+            :customers     => "./data/sa/customers_sa.csv",
+            :transactions  => "./data/sa/transactions_sa.csv"}
+    @se_short= SalesEngine.from_csv(hash)
+    @item_repo = @se_short.items
+    @repo = ItemRepository.new(@se_short)
   end
 
 
@@ -165,6 +175,10 @@ class ItemRepositoryTest < Minitest::Test
     @repo.add_data(item_two)
     @repo.add_data(item_three)
     @repo.add_data(item_four)
+  end
+
+  def test_merchant_function
+      assert_equal @se_short.merchant_find_by_id(12334105), @se_short.items_all.first.merchant
   end
 
 end
