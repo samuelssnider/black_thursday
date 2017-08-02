@@ -1,10 +1,8 @@
-require 'simplecov'
-SimpleCov.start
+require './test/test_helper'
+require 'pry'
 require_relative '../lib/merchant'
 require_relative '../lib/merchant_repository'
-require 'pry'
-require 'minitest/autorun'
-require 'minitest/emoji'
+require_relative '../lib/sales_engine'
 
 class MerchantTest < Minitest::Test
 
@@ -13,7 +11,8 @@ class MerchantTest < Minitest::Test
                               name: "Bob's Bagpipes",
                               created_at: "2010-12-10",
                               updated_at: "2011-12-04"},
-                              MerchantRepository.new(self))
+                              self)
+    @se = SalesEngine.from_csv(load_file)
   end
 
   def test_merchant_exists
@@ -28,17 +27,33 @@ class MerchantTest < Minitest::Test
     assert_equal "Bob's Bagpipes", @merchant.name
   end
 
-  def test_items_return
-    assert_equal "something", @merchant.items
+  def test_it_has_created_at_time
+    assert_equal Time.parse("2010-12-10"), @merchant.created_at
   end
 
-  # def test_invoices_return
-  #   assert_equal "something", @merchant.invoices
-  # end
-  #
-  # def test_customers_return
-  #   assert_equal "something", @merchant.customers
-  # end
+  def test_it_has_updated_at_time
+    assert_equal Time.parse("2011-12-04"), @merchant.updated_at
+  end
 
+  def test_merchant_items_return
+    assert_equal 10003, @se.merchants.merchants[2].items[0].id
+  end
+
+  def test_merchant_invoices_return
+    assert_equal [], @se.merchants.merchants[4].invoices
+  end
+
+  def test_merchant_customers_return
+    assert_equal [], @se.merchants.merchants[4].customers
+  end
+
+  def load_file
+    {:items=>"./data/items_shorter.csv",
+     :merchants=>"./data/merchants_short.csv",
+     :customers=>"./data/customers_short.csv",
+     :invoices=>"./data/invoices_short.csv",
+     :invoice_items=>"./data/invoice_items_short.csv",
+     :transactions=>"./data/transactions_short.csv"}
+  end
 
 end

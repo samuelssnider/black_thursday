@@ -14,10 +14,6 @@ class MerchantRepository
     @merchants
   end
 
-  def inspect
-  "#<#{self.class} #{@merchants.size} rows>"
-  end
-
   def find_by_id(id)
     @merchants.find {|merchant| merchant.id == id}
   end
@@ -51,6 +47,10 @@ class MerchantRepository
     @sales_engine.customer_find_by_id(id)
   end
 
+  private
 
+    def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
+    end
 
 end

@@ -1,9 +1,5 @@
-require 'simplecov'
-SimpleCov.start
+require './test/test_helper'
 require_relative '../lib/transaction_repository'
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/emoji'
 
 class TransactionRepositoryTest < Minitest::Test
 

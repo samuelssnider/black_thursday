@@ -6,6 +6,7 @@ class Invoice
               :status,
               :created_at,
               :updated_at
+
   def initialize(data, repo)
     @repo         = repo
     @id           = data[:id].to_i
@@ -17,29 +18,24 @@ class Invoice
   end
 
   def merchant
-    # @sales_engine.merchants.find_by_id(self.merchant_id)
     @repo.merchants_find_by_id(self.merchant_id)
   end
 
   def invoice_items
-    # @sales_engine.invoice_items.find_all_by_invoice_id(self.id)
     @repo.invoice_items_find_all_by_invoice_id(self.id)
   end
 
   def items
     invoice_items.map do |ii|
-      # @sales_engine.items.find_by_id(ii.item_id)
       @repo.items_find_by_id(ii.item_id)
     end
   end
 
   def transactions
-    # @sales_engine.transactions.find_all_by_invoice_id(self.id)
     @repo.transations_find_all_by_invoice_id(self.id)
   end
 
   def customer
-    # @sales_engine.customers.find_by_id(self.customer_id)
     @repo.customer_find_by_id(self.customer_id)
   end
 

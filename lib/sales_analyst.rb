@@ -203,7 +203,6 @@ class SalesAnalyst
         total += (invoice_item.quantity)
       end
     end
-    total
   end
 
 
