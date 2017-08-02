@@ -203,15 +203,16 @@ class SalesAnalyst
         total += (invoice_item.quantity)
       end
     end
+    total
   end
 
 
   def most_sold_item_for_merchant(merchant_id) #=> [item] (in terms of quantity sold) or, if there is a tie, [item, item, item]
     item_totals = merchant_sales_by_item(merchant_id)
-    top = item_totals.max_by do |item_id, revenue|
-      revenue
+    tops = find_highest(item_totals)
+    tops.map do |top|
+      @sales_engine.item_find_by_id(top[0])
     end
-    @sales_engine.item_find_by_id(top[0])
   end
 
   def best_item_for_merchant(merchant_id)
