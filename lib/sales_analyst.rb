@@ -153,45 +153,6 @@ class SalesAnalyst
     item_revenues
   end
 
-  # def revenue_by_merchant(merchant_id)
-  #   merchants_by_revenue(invoices_by_merchant).find do |rev_merch|
-  #     rev_merch.values.first.id == merchant_id
-  #   end.keys.first
-  # end
-
-  # def merchant_sales_by_item(merchant_id)
-  #   merchant = @sales_engine.merchant_find_by_id(merchant_id)
-  #   items    = merchant.items
-  #   item_totals = Hash.new(0)
-  #   items.each do |item|
-  #     item_totals[item.id] = item_tot_sales(item.id)
-  #   end
-  #   item_totals
-  # end
-
-  def item_tot_revenue(item_id)
-    invoice_items = @sales_engine.invoice_items_find_all_by_item_id(item_id)
-    total = 0
-    invoice_items.each do |invoice_item|
-      if @sales_engine.invoice_find_by_id(invoice_item.invoice_id).is_paid_in_full?
-        total += (invoice_item.unit_price * invoice_item.quantity)
-      end
-    end
-    total
-  end
-
-  def item_tot_sales(item_id)
-    invoice_items = @sales_engine.invoice_items_find_all_by_item_id(item_id)
-    total = 0
-    invoice_items.each do |invoice_item|
-      if @sales_engine.invoices_find_by_id(invoice_item.invoice_id).is_paid_in_full?
-        total += (invoice_item.quantity)
-      end
-    end
-    total
-  end
-
-
   def most_sold_item_for_merchant(merchant_id) #=> [item] (in terms of quantity sold) or, if there is a tie, [item, item, item]
     item_totals = merchant_sales_by_item(merchant_id)
     tops = find_highest(item_totals)
