@@ -1,5 +1,6 @@
 require './test/test_helper'
 require './lib/merchant_repository'
+require 'csv'
 
 class MerchantRepositoryTest < Minitest::Test
 
@@ -62,6 +63,12 @@ class MerchantRepositoryTest < Minitest::Test
     assert_equal 3, list.last.id
     list_two = @merchant_r.find_all_by_name("t")
     assert_equal 4, list_two.count
+  end
+
+  def test_adding_data_by_csv
+    merchant = MerchantRepository.new(self)
+    merchant.from_csv("./data/merchants_short.csv")
+    assert_equal 5, merchant.all.count
   end
 
 end
