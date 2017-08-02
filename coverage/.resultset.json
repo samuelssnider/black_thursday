@@ -1,7 +1,7 @@
 {
   "Unit Tests": {
     "coverage": {
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/calculator.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/calculator.rb": [
         1,
         1,
         null,
@@ -26,7 +26,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/customer_repository_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/customer_repository_test.rb": [
         1,
         1,
         1,
@@ -145,13 +145,13 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/test_helper.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/test_helper.rb": [
         1,
         1,
         1,
         1
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/customer_repository.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/customer_repository.rb": [
         1,
         null,
         1,
@@ -202,7 +202,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/customer.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/customer.rb": [
         1,
         null,
         1,
@@ -221,7 +221,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/customer_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/customer_test.rb": [
         1,
         1,
         null,
@@ -268,7 +268,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/invoice_item_repository_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/invoice_item_repository_test.rb": [
         1,
         1,
         1,
@@ -349,7 +349,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/invoice_item_repository.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/invoice_item_repository.rb": [
         1,
         1,
         1,
@@ -399,7 +399,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/invoice_item.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/invoice_item.rb": [
         1,
         1,
         1,
@@ -423,7 +423,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/invoice_item_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/invoice_item_test.rb": [
         1,
         1,
         null,
@@ -470,7 +470,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/invoice_repository_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/invoice_repository_test.rb": [
         1,
         1,
         1,
@@ -618,7 +618,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/invoice_repository.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/invoice_repository.rb": [
         1,
         null,
         1,
@@ -684,7 +684,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/invoice.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/invoice.rb": [
         1,
         1,
         1,
@@ -744,7 +744,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/sales_engine.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/sales_engine.rb": [
         1,
         1,
         1,
@@ -902,7 +902,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/item_repository.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/item_repository.rb": [
         null,
         1,
         1,
@@ -972,7 +972,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/item.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/item.rb": [
         1,
         1,
         1,
@@ -1002,7 +1002,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/merchant_repository.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/merchant_repository.rb": [
         1,
         null,
         1,
@@ -1060,7 +1060,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/merchant.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/merchant.rb": [
         1,
         1,
         1,
@@ -1092,7 +1092,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/transaction_repository.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/transaction_repository.rb": [
         1,
         1,
         null,
@@ -1147,7 +1147,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/transaction.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/transaction.rb": [
         1,
         1,
         1,
@@ -1175,7 +1175,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/invoice_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/invoice_test.rb": [
         1,
         1,
         1,
@@ -1248,7 +1248,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/item_repository_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/item_repository_test.rb": [
         1,
         1,
         1,
@@ -1434,7 +1434,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/item_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/item_test.rb": [
         1,
         1,
         1,
@@ -1498,7 +1498,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/merchant_repository_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/merchant_repository_test.rb": [
         1,
         1,
         1,
@@ -1593,7 +1593,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/merchant_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/merchant_test.rb": [
         1,
         1,
         1,
@@ -1654,7 +1654,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/sales_analyst_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/sales_analyst_test.rb": [
         1,
         1,
         1,
@@ -1805,7 +1805,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/lib/sales_analyst.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/lib/sales_analyst.rb": [
         1,
         1,
         1,
@@ -1966,14 +1966,32 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
         null,
+        null,
+        null,
+        0,
+        0,
+        0,
+        0,
+        null,
+        null,
+        0,
         null,
         null,
         1,
         0,
         0,
         0,
+        0,
+        0,
+        0,
         null,
+        null,
+        null,
+        0,
         0,
         null,
         null,
@@ -2096,7 +2114,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/sales_engine_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/sales_engine_test.rb": [
         1,
         1,
         1,
@@ -2300,7 +2318,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/transaction_repository_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/transaction_repository_test.rb": [
         1,
         1,
         null,
@@ -2414,7 +2432,7 @@
         null,
         null
       ],
-      "/Users/samuelsnider/turing/1module/black_thursday/test/transaction_test.rb": [
+      "/Users/jayphodges/turing/1module/black_thursday/test/transaction_test.rb": [
         1,
         1,
         1,
@@ -2468,6 +2486,6 @@
         null
       ]
     },
-    "timestamp": 1501712706
+    "timestamp": 1501712982
   }
 }

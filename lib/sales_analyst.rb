@@ -153,6 +153,12 @@ class SalesAnalyst
     item_revenues
   end
 
+  def revenue_by_merchant(merchant_id)
+  merchants_by_revenue(invoices_by_merchant).find do |rev_merch|
+    rev_merch.values.first.id == merchant_id
+  end.keys.first
+end
+
   def most_sold_item_for_merchant(merchant_id) #=> [item] (in terms of quantity sold) or, if there is a tie, [item, item, item]
     merchant = @sales_engine.merchant_find_by_id(merchant_id)
     results = Hash.new(0)
