@@ -102,11 +102,18 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_merchants_with_only_one_item
+    array = [@se_short.merchant_find_by_id(12334112),@se_short.merchant_find_by_id(12334113)]
+    assert_equal array, @sa_short.merchants_with_only_one_item
+  end
+
+  def test_merchants_with_only_one_item_registered_in_month
     assert_equal [], @sa_short.merchants_with_only_one_item_registered_in_month("January")
     assert_equal [@se_short.merchant_find_by_id(12334112)], @sa_short.merchants_with_only_one_item_registered_in_month("May")
     assert_equal [], @sa_short.merchants_with_only_one_item_registered_in_month("June")
     assert_equal [@se_short.merchant_find_by_id(12334113)], @sa_short.merchants_with_only_one_item_registered_in_month("March")
   end
+
+
 
 
 
