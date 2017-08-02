@@ -154,19 +154,37 @@ class SalesAnalyst
   end
 
   def most_sold_item_for_merchant(merchant_id) #=> [item] (in terms of quantity sold) or, if there is a tie, [item, item, item]
-    item_totals = merchant_sales_by_item(merchant_id)
-    tops = find_highest(item_totals)
-    tops.map do |top|
-      @sales_engine.item_find_by_id(top[0])
+    merchant = @sales_engine.merchant_find_by_id(merchant_id)
+    results = Hash.new(0)
+    reply = []
+    merchant.invoices.each do |invoice|
+      if invoice.is_paid_in_full?
+        invoice.invoice_items.each do |item|
+          results[item.item_id] += item.quantity
+        end
+      end
     end
+    max = results.max_by {|k,v| v}[1]
+    results.each_pair do |k,v|
+      if v == max
+        reply << @sales_engine.item_find_by_id(k)
+      end
+    end
+    return reply
   end
 
   def best_item_for_merchant(merchant_id)
-    item_revenues = merchant_revenue_by_item(merchant_id)
-    best = item_revenues.max_by do |item_id, revenue|
-      revenue
+    merchant = @sales_engine.merchant_find_by_id(merchant_id)
+    results = Hash.new(0)
+    merchant.invoices.each do |invoice|
+      if invoice.is_paid_in_full?
+        invoice.invoice_items.each do |item|
+          results[item.item_id] += (item.quantity * item.unit_price.to_f)
+        end
+      end
     end
-    @sales_engine.item_find_by_id(best[0])
+    top = results.key(results.values.max)
+    @sales_engine.item_find_by_id(top)
   end
 
   def merchants_with_pending_invoices
