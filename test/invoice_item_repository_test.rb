@@ -1,6 +1,4 @@
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/emoji'
+require './test/test_helper'
 require './lib/invoice_item_repository'
 require 'bigdecimal'
 require 'pry'

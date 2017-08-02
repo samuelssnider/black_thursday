@@ -17,8 +17,8 @@ class ItemRepository
     @items.find {|item| item.id == id}
   end
 
-  def find_by_name(name)
-    @items.find {|item| item.name == name}
+  def find_by_name(item_name)
+    @items.find {|item| item.name == item_name}
   end
 
   def find_all_with_description(descrip)
@@ -55,12 +55,14 @@ class ItemRepository
     @items << Item.new(data.to_hash, self)
   end
 
-  def inspect
-    "#<#{self.class} #{@items.size} rows>"
-  end
-
   def find_merchant_by_id(merch_id)
     @sales_engine.merchant_find_by_id(merch_id)
   end
+
+  private
+
+    def inspect
+      "#<#{self.class} #{@items.size} rows>"
+    end
 
 end

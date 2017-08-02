@@ -1,10 +1,6 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/emoji'
+require './test/test_helper'
+require './lib/invoice_repository'
 require 'bigdecimal'
-require_relative '../lib/invoice_repository'
 require 'pry'
 
 class InvoiceRepositoryTest < Minitest::Test

@@ -1,10 +1,6 @@
-require 'simplecov'
-SimpleCov.start
+require './test/test_helper'
 require_relative '../lib/merchant'
 require_relative '../lib/merchant_repository'
-require 'pry'
-require 'minitest/autorun'
-require 'minitest/emoji'
 
 class MerchantTest < Minitest::Test
 

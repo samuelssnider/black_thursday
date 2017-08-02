@@ -1,9 +1,5 @@
-require 'simplecov'
-SimpleCov.start
+require './test/test_helper'
 require_relative '../lib/sales_analyst'
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/emoji'
 
 class SalesAnalystTest < Minitest::Test
   def setup

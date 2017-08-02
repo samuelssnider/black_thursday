@@ -39,6 +39,8 @@ class CustomerRepository
     @customers << Customer.new(data.to_hash, self)
   end
 
+  private
+
   def inspect
     "#<#{self.class} #{@customers.size} rows>"
   end

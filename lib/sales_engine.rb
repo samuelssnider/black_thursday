@@ -62,14 +62,14 @@ class SalesEngine
   end
 
   def item_find_by_name(name)
-    @items.find_by_name
+    @items.find_by_name(name)
   end
 
   def items_find_all_with_description(description)
     @items.find_all_with_description(description)
   end
 
-  def items_find_all_by_price
+  def items_find_all_by_price(price) #probably unnecessary
     @items.find_all_by_price(price)
   end
 
