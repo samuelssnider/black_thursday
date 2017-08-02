@@ -7,14 +7,14 @@ class SalesAnalyst
   attr_reader :sales_engine
   include Calculator
 
+  def initialize(sales_engine)
+    @sales_engine = sales_engine
+  end
+
   def average_invoices_per_merchant
     merchants = @sales_engine.merchants_all.count
     invoices = @sales_engine.invoices_all.count
     (invoices / merchants.to_f).round(2)
-  end
-
-  def initialize(sales_engine)
-    @sales_engine = sales_engine
   end
 
   def average_items_per_merchant
@@ -110,12 +110,6 @@ class SalesAnalyst
     merchants = @sales_engine.merchants.all
     averages = list_avg_merch(merchants)
     mean(averages).round(2)
-  end
-
-  def list_avg_merch(in_set)
-    in_set.map do |merchant|
-      average_item_price_for_merchant(merchant.id)
-    end
   end
 
   def golden_items
@@ -316,6 +310,12 @@ class SalesAnalyst
   def invoices_by_merchant
     @sales_engine.merchants_all.map do |merchant|
       merchant.invoices
+    end
+  end
+
+  def list_avg_merch(in_set)
+    in_set.map do |merchant|
+      average_item_price_for_merchant(merchant.id)
     end
   end
 
