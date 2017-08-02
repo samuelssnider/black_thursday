@@ -85,7 +85,7 @@ class SalesEngine
     @invoices.all
   end
 
-  def invoice_find_by_id(id)
+  def invoices_find_by_id(id)
     @invoices.find_by_id(id)
   end
 
@@ -129,8 +129,8 @@ class SalesEngine
     @transactions.find_all_by_invoice_id(invoice_id)
   end
 
-  def transactions_find_all_by_credit_card_number(cc)
-    @transactions.find_all_by_credit_card_number
+  def transactions_find_all_by_credit_card_number(cc) #probably not used
+    @transactions.find_all_by_credit_card_number(cc)
   end
 
   def transactions_find_all_by_result(result)
@@ -152,7 +152,5 @@ class SalesEngine
   def customers_find_all_by_last_name(l_name)
     @customers.find_all_by_last_name(l_name)
   end
-
-
-
+  
 end

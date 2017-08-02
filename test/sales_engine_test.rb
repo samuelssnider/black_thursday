@@ -12,123 +12,133 @@ class SalesEngineTest < Minitest::Test
   def test_it_can_be_initialized
     assert_instance_of SalesEngine, @se
   end
-#=======================
-def test_merchants_all
-  assert_equal 5, @se.merchants_all.count
-end
 
-def test_merchant_find_by_id
-  assert_equal "LolaMarleys", @se.merchant_find_by_id(12334115).name
-end
+  def test_initialize_attributes
+    assert_instance_of ItemRepository, @se.items
+    assert_instance_of MerchantRepository, @se.merchants
+    assert_instance_of InvoiceRepository, @se.invoices
+    assert_instance_of TransactionRepository, @se.transactions
+    assert_instance_of InvoiceItemRepository, @se.invoice_items
+    assert_instance_of CustomerRepository, @se.customers
+  end
 
-def test_merchant_find_by_name
-  assert_equal 12334115, @se.merchant_find_by_name("LolaMarleys").id
-end
+  def test_merchants_all
+    assert_equal 5, @se.merchants_all.count
+  end
 
-def test_merchants_find_all_by_name
-  assert_equal 2, @se.merchants_find_all_by_name("ar").count
-end
+  def test_merchant_find_by_id
+    assert_equal "LolaMarleys", @se.merchant_find_by_id(12334115).name
+  end
 
-def test_items_all
-  assert_equal 3, @se.items_all.count
-end
+  def test_merchant_find_by_name
+    assert_equal 12334115, @se.merchant_find_by_name("LolaMarleys").id
+  end
 
-def test_item_find_by_id
-  assert_equal "Item 5", @se.item_find_by_id(10004).name
-end
+  def test_merchants_find_all_by_name
+    assert_equal 2, @se.merchants_find_all_by_name("ar").count
+  end
 
-def test_item_find_by_name
-  assert_equal 10003, @se.item_find_by_name("Item 4").id
-end
+  def test_items_all
+    assert_equal 3, @se.items_all.count
+  end
 
-def test_items_find_all_with_description
-  assert_equal 2, @se.items_find_all_with_description("ano").count
-end
+  def test_item_find_by_id
+    assert_equal "Item 5", @se.item_find_by_id(10004).name
+  end
 
-def test_items_find_all_by_price
-  assert_equal "Item 4", @se.items_find_all_by_price(BigDecimal.new(12.5, 4))[0].name
-end
+  def test_item_find_by_name
+    assert_equal 10003, @se.item_find_by_name("Item 4").id
+  end
 
-def test_items_find_all_by_price_in_range
-  range = (BigDecimal.new(6.5, 4)..BigDecimal.new(12.5, 4))
-  assert_equal 2, @se.items_find_all_by_price_in_range(range).count
-end
+  def test_items_find_all_with_description
+    assert_equal 2, @se.items_find_all_with_description("ano").count
+  end
 
-def test_items_find_all_by_merchant_id
-  assert_equal 2, @se.items_find_all_by_merchant_id(12334113).count
-end
+  def test_items_find_all_by_price
+    assert_equal "Item 4", @se.items_find_all_by_price(BigDecimal.new(12.5, 4))[0].name
+  end
 
-# def invoices_all
-#   assert_equal 4, @se.invoices_all.count
-# end
-#
-# def invoice_find_by_id
-#   assert_equal "Item 6", invoice_find_by_id(10005).name
-# end
+  def test_items_find_all_by_price_in_range
+    range = (BigDecimal.new(6.5, 4)..BigDecimal.new(12.5, 4))
+    assert_equal 2, @se.items_find_all_by_price_in_range(range).count
+  end
 
-# def invoices_find_all_by_customer_id(cust_id)
-#   @invoices.find_all_by_customer_id(cust_id)
-# end
-#
-# def invoices_find_all_by_merchant_id(merch_id)
-#   @invoices.find_all_by_merchant_id(merch_id)
-# end
-#
-# def invoices_find_all_by_status(status)
-#   @invoices.find_all_by_status(status)
-# end
-#
-# def invoice_items_all
-#   @invoice_items.all
-# end
-#
-# def invoice_item_find_by_id(id)
-#   @invoice_items.find_by_id(id)
-# end
-#
-# def invoice_items_find_all_by_item_id(item_id)
-#   @invoice_items.find_all_by_item_id(item_id)
-# end
-#
-# def invoice_items_find_all_by_invoice(invoice_id)
-#   @invoice_items.find_all_by_invoice_id(invoice_id)
-# end
-#
-# def transactions_all
-#   @transactions.all
-# end
-#
-# def transaction_find_by_id(id)
-#   @transactions.find_by_id(id)
-# end
-#
-# def transactions_find_all_by_invoice_id(invoice_id)
-#   @transactions.find_all_by_invoice_id(invoice_id)
-# end
-#
-# def transactions_find_all_by_credit_card_number(cc)
-#   @transactions.find_all_by_credit_card_number
-# end
-#
-# def transactions_find_all_by_result(result)
-#   @transactions.find_all_by_result(result)
-# end
-#
-# def customers_all
-#   @customers.all
-# end
-#
-# def customer_find_by_id(id)
-#   @customers.find_by_id(id)
-# end
-#
-# def customers_find_all_by_first_name(f_name)
-#   @customers.find_all_by_first_name(f_name)
-# end
-#
-# def customers_find_all_by_last_name(l_name)
-#   @customers.find_all_by_last_name(l_name)
-# end
+  def test_items_find_all_by_merchant_id
+    assert_equal 2, @se.items_find_all_by_merchant_id(12334113).count
+  end
+
+  def test_invoices_all
+    assert_equal 10, @se.invoices_all.count
+  end
+
+  def test_invoices_find_by_id
+    assert_equal 1, @se.invoices_find_by_id(3).customer_id
+  end
+
+  def test_invoices_find_all_by_customer_id
+    assert_equal 8, @se.invoices_find_all_by_customer_id(1).count
+  end
+
+  def test_invoices_find_all_by_merchant_id
+    assert_equal 2, @se.invoices_find_all_by_merchant_id(12334269).count
+  end
+
+  def test_invoices_find_all_by_status
+    assert_equal 6, @se.invoices_find_all_by_status("pending".to_sym).count
+  end
+
+  def test_invoice_items_all
+    assert_equal 10, @se.invoice_items_all.count
+  end
+
+  def test_invoice_item_find_by_id
+    assert_equal 4, @se.invoice_item_find_by_id(9).invoice_id
+  end
+
+  def test_invoice_items_find_all_by_item_id
+    assert_equal 2, @se.invoice_items_find_all_by_item_id(123400005).count
+  end
+
+  def test_invoice_items_find_all_by_invoice
+    assert_equal 3, @se.invoice_items_find_all_by_invoice(3).count
+  end
+
+  def test_transactions_all
+    assert_equal 10, @se.transactions_all.count
+  end
+
+  def test_transaction_find_by_id
+    assert_equal 3333, @se.transaction_find_by_id(3).invoice_id
+  end
+
+  def test_transactions_find_all_by_invoice_id
+    assert_equal 2, @se.transactions_find_all_by_invoice_id(8888).count
+  end
+
+  def test_transactions_find_all_by_credit_card_number
+    actual = @se.transactions_find_all_by_credit_card_number(4839506591130408)
+    assert_equal 2, actual.count
+  end
+
+  def test_transactions_find_all_by_result
+    assert_equal 6, @se.transactions_find_all_by_result("success").count
+  end
+
+  def test_customers_all
+    assert_equal 10, @se.customers_all.count
+  end
+
+  def test_customer_find_by_id
+    assert_equal "Cecelia", @se.customer_find_by_id(2).first_name
+  end
+
+  def test_customers_find_all_by_first_name
+    assert_equal 7, @se.customers_find_all_by_first_name("e").count
+  end
+
+  def test_customers_find_all_by_last_name
+    assert_equal 5, @se.customers_find_all_by_last_name("a").count
+  end
 #=======================
 
   # def test_class_method_working
