@@ -40,12 +40,14 @@ class TransactionRepository
     @transactions << Transaction.new(data.to_hash, self)
   end
 
-  def inspect
-    "#<#{self.class} #{@transactions.size} rows>"
-  end
-
   def invoices_find_by_id(id)
     @sales_engine.invoice_find_by_id(id)
   end
+
+  private
+
+    def inspect
+      "#<#{self.class} #{@transactions.size} rows>"
+    end
 
 end

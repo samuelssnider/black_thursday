@@ -1,6 +1,4 @@
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/emoji'
+require './test/test_helper'
 require './lib/invoice_item_repository'
 require 'bigdecimal'
 require 'pry'
@@ -35,11 +33,10 @@ class InvoiceItemRepositoryTest < Minitest::Test
     assert_equal 3, repo.find_by_id(5).invoice_id
   end
 
-  def test_it_find_all_by_invoice_id(invoice_id)
+  def test_it_find_all_by_invoice_id
     repo = InvoiceItemRepository.new(self)
     repo.from_csv("./data/invoice_items_short.csv")
-    binding.pry
-    assert_instance_of 123400001, repo.find_all_by_invoice_id("5")[0].invoice_id
+    assert_equal 123400007, repo.find_all_by_invoice_id(4)[0].item_id
   end
 
 

@@ -21,10 +21,6 @@ class Item
     @updated_at = Time.parse(data[:updated_at])
   end
 
-  # def merchant
-  #   @sales_engine.merchants.find_by_id(self.merchant_id)
-  # end
-
   def merchant
     @repo.find_merchant_by_id(merchant_id)
   end

@@ -39,6 +39,8 @@ class InvoiceItemRepository
     @invoice_items << InvoiceItem.new(data.to_hash, @sales_engine)
   end
 
+  private
+
   def inspect
     "#<#{self.class} #{@invoice_items.size} rows>"
   end

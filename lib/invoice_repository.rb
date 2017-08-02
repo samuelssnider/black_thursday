@@ -34,10 +34,6 @@ class InvoiceRepository
     @invoices << Invoice.new(data.to_hash, self)
   end
 
-  def inspect
-    "#<#{self.class} #{@invoices.size} rows>"
-  end
-
   def merchants_find_by_id(id)
     @sales_engine.merchant_find_by_id(id)
   end
@@ -59,6 +55,10 @@ class InvoiceRepository
     @sales_engine.customer_find_by_id(id)
   end
 
+  private
 
+    def inspect
+      "#<#{self.class} #{@invoices.size} rows>"
+    end
 
 end
