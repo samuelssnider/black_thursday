@@ -135,27 +135,12 @@ class SalesAnalyst
     total
   end
 
-  def all_merchant_averages
-    repo = @sales_engine.merchants_all
-    average_set = []
-    repo.each do |merchant|
-      average_set << {count: total_matches(merchant.id), merchant: merchant}
-    end
-    average_set
-  end
-
   def top_revenue_earners(number = 20)
     grab(merchants_by_revenue(invoices_by_merchant), number)
   end
 
   def merchants_ranked_by_revenue
     grab(merchants_by_revenue(invoices_by_merchant))
-  end
-
-  def revenue_by_merchant(merchant_id)
-    merchants_by_revenue(invoices_by_merchant).find do |rev_merch|
-      rev_merch.values.first.id == merchant_id
-    end.keys.first
   end
 
   def merchant_revenue_by_item(merchant_id)
@@ -168,15 +153,21 @@ class SalesAnalyst
     item_revenues
   end
 
-  def merchant_sales_by_item(merchant_id)
-    merchant = @sales_engine.merchant_find_by_id(merchant_id)
-    items    = merchant.items
-    item_totals = Hash.new(0)
-    items.each do |item|
-      item_totals[item.id] = item_tot_sales(item.id)
-    end
-    item_totals
-  end
+  # def revenue_by_merchant(merchant_id)
+  #   merchants_by_revenue(invoices_by_merchant).find do |rev_merch|
+  #     rev_merch.values.first.id == merchant_id
+  #   end.keys.first
+  # end
+
+  # def merchant_sales_by_item(merchant_id)
+  #   merchant = @sales_engine.merchant_find_by_id(merchant_id)
+  #   items    = merchant.items
+  #   item_totals = Hash.new(0)
+  #   items.each do |item|
+  #     item_totals[item.id] = item_tot_sales(item.id)
+  #   end
+  #   item_totals
+  # end
 
   def item_tot_revenue(item_id)
     invoice_items = @sales_engine.invoice_items_find_all_by_item_id(item_id)
@@ -279,9 +270,15 @@ class SalesAnalyst
     revenues = all_merchant_revenues.map do |r|
       r.keys
     end
-    sorted   = revenues.sort_by          {|revenue| revenue}
-    all      = sorted[(-number)..-1]
-    sorted_merchants(all_merchant_revenues, all)
+    unless number > revenues.count
+      sorted   = revenues.sort_by          {|revenue| revenue}
+      all      = sorted[(-number)..-1]
+      sorted_merchants(all_merchant_revenues, all)
+    else
+      sorted   = revenues.sort_by          {|revenue| revenue}
+      all      = sorted
+      sorted_merchants(all_merchant_revenues, all)
+    end
   end
 
   def merchants_by_revenue(invoice_by_m)
@@ -317,6 +314,15 @@ class SalesAnalyst
     in_set.map do |merchant|
       average_item_price_for_merchant(merchant.id)
     end
+  end
+
+  def all_merchant_averages
+    repo = @sales_engine.merchants_all
+    average_set = []
+    repo.each do |merchant|
+      average_set << {count: total_matches(merchant.id), merchant: merchant}
+    end
+    average_set
   end
 
 end

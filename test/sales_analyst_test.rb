@@ -1,5 +1,6 @@
 require './test/test_helper'
 require_relative '../lib/sales_analyst'
+require 'time'
 
 class SalesAnalystTest < Minitest::Test
   def setup
@@ -73,6 +74,40 @@ class SalesAnalystTest < Minitest::Test
   def test_average_average_price_per_merchant
     assert_equal 60.55, @sa_short.average_average_price_per_merchant
   end
+
+  def test_golden_items
+    assert @sa_short.golden_items.empty?
+  end
+
+  def test_total_revenue_by_date
+    assert_equal 13410.5, @sa_short.total_revenue_by_date(Time.parse("2003-04-07"))
+    assert_equal 4380.14, @sa_short.total_revenue_by_date(Time.parse("2005-01-03"))
+    assert_equal 4647.1, @sa_short.total_revenue_by_date(Time.parse("2015-08-21"))
+    assert_equal 0.0, @sa_short.total_revenue_by_date(Time.parse("2010-09-14"))
+  end
+
+  def test_top_revenue_earners
+    assert_equal @se_short.merchants_all.count, @sa_short.top_revenue_earners.count
+    assert_equal @sa_short.merchants_ranked_by_revenue, @sa_short.top_revenue_earners
+
+  end
+
+  def test_merchants_ranked_by_revenue
+    assert_equal @se_short.merchants_all.count, @sa_short.merchants_ranked_by_revenue.count
+    assert_equal @sa_short.top_revenue_earners,  @sa_short.merchants_ranked_by_revenue
+  end
+
+  def test_merchants_with_pending_invoices
+    assert_equal 2, @sa_short.merchants_with_pending_invoices.count
+  end
+
+  def test_merchants_with_only_one_item
+    assert_equal [], @sa_short.merchants_with_only_one_item_registered_in_month("January")
+    assert_equal [@se_short.merchant_find_by_id(12334112)], @sa_short.merchants_with_only_one_item_registered_in_month("May")
+    assert_equal [], @sa_short.merchants_with_only_one_item_registered_in_month("June")
+    assert_equal [@se_short.merchant_find_by_id(12334113)], @sa_short.merchants_with_only_one_item_registered_in_month("March")
+  end
+
 
 
 
