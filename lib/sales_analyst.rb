@@ -203,6 +203,7 @@ class SalesAnalyst
         total += (invoice_item.quantity)
       end
     end
+    total
   end
 
 
@@ -210,7 +211,8 @@ class SalesAnalyst
     item_totals = merchant_sales_by_item(merchant_id)
     tops = find_highest(item_totals)
     tops.map do |top|
-    @sales_engine.item_find_by_id(top[0])
+      @sales_engine.item_find_by_id(top[0])
+    end
   end
 
   def best_item_for_merchant(merchant_id)
