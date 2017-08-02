@@ -1,5 +1,6 @@
 require './test/test_helper'
 require './lib/invoice_repository'
+require './lib/sales_engine'
 require 'bigdecimal'
 require 'pry'
 
@@ -141,6 +142,5 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_equal :shipped , list.last.status
     assert_equal 3        , list.last.customer_id
   end
-
 
 end

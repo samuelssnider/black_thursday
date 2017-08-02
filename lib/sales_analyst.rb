@@ -189,7 +189,6 @@ class SalesAnalyst
          it_id_counts.merge!({id => iis.count})
       end
     end
-    binding.pry
   end
 
 
@@ -204,7 +203,6 @@ class SalesAnalyst
         end
       end
     end
-    binding.pry
   end
 
   def merchants_with_pending_invoices

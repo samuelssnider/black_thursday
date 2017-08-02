@@ -41,7 +41,7 @@ class TransactionRepository
   end
 
   def invoices_find_by_id(id)
-    @sales_engine.invoice_find_by_id(id)
+    @sales_engine.invoices_find_by_id(id)
   end
 
   private
