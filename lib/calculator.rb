@@ -20,4 +20,8 @@ module Calculator
     Math.sqrt(average_difference).round(3)
   end
 
+  def average_this_per_that(this, that)
+    (this / that.to_f).round(2)
+  end
+
 end

@@ -16,13 +16,13 @@ class SalesAnalyst
   def average_invoices_per_merchant
     merchants = @sales_engine.merchants_all.count
     invoices = @sales_engine.invoices_all.count
-    (invoices / merchants.to_f).round(2)
+    average_this_per_that(invoices, merchants)
   end
 
   def average_items_per_merchant
     merchants = @sales_engine.merchants_all.count
     items = @sales_engine.items_all.count
-    (items / merchants.to_f).round(2)
+    average_this_per_that(items, merchants)
   end
 
   def top_days_by_invoice_count
@@ -219,5 +219,5 @@ class SalesAnalyst
   def invoices_by_merchant
     @sales_engine.merchants_all.map(&:invoices)
   end
-  
+
 end
