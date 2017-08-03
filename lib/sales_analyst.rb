@@ -202,27 +202,22 @@ class SalesAnalyst
 
   private
 
-    def average_invoices_per_day
-      @sales_engine.invoices_all.count / 7
-    end
+  def average_invoices_per_day
+    @sales_engine.invoices_all.count / 7
+  end
 
-    def total_matches(id)
-      count = @sales_engine.items_find_all_by_merchant_id(id).count
-    end
+  def total_matches(id)
+    count = @sales_engine.items_find_all_by_merchant_id(id).count
+  end
 
-    def all_invoice_averages
-      @sales_engine.merchants_all.map do |merchant|
-        merchant.invoices.count
-      end
+  def all_invoice_averages
+    @sales_engine.merchants_all.map do |merchant|
+      merchant.invoices.count
     end
+  end
 
-    def invoices_by_merchant
-      @sales_engine.merchants_all.map(&:invoices)
-    end
-
-    # def merchant_revenue_by_item(merchant_id)
-    #   merchant = @sales_engine.merchant_find_by_id(merchant_id)
-    #   items    = merchant.items
-    #   revenue_by_item(items)
-    # end
+  def invoices_by_merchant
+    @sales_engine.merchants_all.map(&:invoices)
+  end
+  
 end
