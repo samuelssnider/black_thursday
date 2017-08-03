@@ -141,16 +141,6 @@ class SalesAnalyst
     end.keys.first
   end
 
-  def merchant_revenue_by_item(merchant_id)
-    merchant = @sales_engine.merchant_find_by_id(merchant_id)
-    items    = merchant.items
-    item_revenues = Hash.new(0)
-    items.each do |item|
-      item_revenues[item.id] = item_tot_revenue(item.id)
-    end
-    item_revenues
-  end
-
   def revenue_by_merchant(merchant_id)
     merchants_by_revenue(invoices_by_merchant).find do |rev_merch|
       rev_merch.values.first.id == merchant_id
@@ -292,5 +282,15 @@ class SalesAnalyst
         average_set << { count: total_matches(merchant.id), merchant: merchant }
       end
       average_set
+    end
+
+    def merchant_revenue_by_item(merchant_id)
+      merchant = @sales_engine.merchant_find_by_id(merchant_id)
+      items    = merchant.items
+      item_revenues = Hash.new(0)
+      items.each do |item|
+        item_revenues[item.id] = item_tot_revenue(item.id)
+      end
+      item_revenues
     end
 end

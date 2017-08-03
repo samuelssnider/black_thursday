@@ -113,4 +113,8 @@ class SalesAnalystTest < Minitest::Test
     assert_equal [@se_short.merchant_find_by_id(12334113)], @sa_short.merchants_with_only_one_item_registered_in_month("March")
   end
 
+  def test_revenue_by_merchant
+    assert_equal 13410.5, @sa_short.revenue_by_merchant(12334112)
+  end
+
 end
