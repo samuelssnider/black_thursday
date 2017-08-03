@@ -117,4 +117,12 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 13410.5, @sa_short.revenue_by_merchant(12334112)
   end
 
+  def test_best_item_for_merchant
+    assert_nil nil, @sa_short.best_item_for_merchant(12334112)
+  end
+
+  def test_most_sold_item_for_merchant
+    assert_equal [], @sa_short.most_sold_item_for_merchant(12334112)
+  end
+
 end

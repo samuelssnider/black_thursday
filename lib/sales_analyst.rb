@@ -161,7 +161,7 @@ class SalesAnalyst
     results.each_pair do |k, v|
       reply << @sales_engine.item_find_by_id(k) if v == max
     end
-    reply
+    reply.compact
   end
 
   def best_item_for_merchant(merchant_id)
