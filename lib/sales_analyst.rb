@@ -2,10 +2,12 @@ require_relative '../lib/sales_engine'
 require_relative '../lib/calculator'
 require 'date'
 require 'pry'
+require_relative '../lib/data_manipulator'
 
 class SalesAnalyst
   attr_reader :sales_engine
   include Calculator
+  include DataManipulator
 
   def initialize(sales_engine)
     @sales_engine = sales_engine
@@ -35,7 +37,7 @@ class SalesAnalyst
   end
 
   def average_items_per_merchant_standard_deviation
-    standard_deviance(all_merchant_averages.map { |average| average[:count] }).round(2)
+    standard_deviance(all_merchant_averages(sales_engine.merchants_all).map { |average| average[:count] }).round(2)
   end
 
   def average_invoices_per_merchant_standard_deviation
@@ -43,11 +45,11 @@ class SalesAnalyst
   end
 
   def merchants_with_high_item_count
-    s_dev    = average_items_per_merchant_standard_deviation
-    avg_each = average_items_per_merchant
-    mark     = s_dev + avg_each
+    s_dev         = average_items_per_merchant_standard_deviation
+    avg_each      = average_items_per_merchant
+    mark          = s_dev + avg_each
     example_merch = []
-    example_merch = all_merchant_averages.find_all do |average|
+    example_merch = all_merchant_averages(sales_engine.merchants_all).find_all do |average|
       example_merch << average[:merchant].to_s if average[:count] > mark
     end
     examples = example_merch.map do |example|
@@ -200,97 +202,22 @@ class SalesAnalyst
 
   private
 
-    def sorted_merchants(all_merchant_revenues, list)
-      merchants = []
-      list.reverse.each do |s|
-        all_merchant_revenues.each do |r_m|
-          merchants << r_m.values if r_m.keys == s
-        end
-      end
-      merchants.flatten
-    end
+  def average_invoices_per_day
+    @sales_engine.invoices_all.count / 7
+  end
 
-    def convert_date(input) # expected input: invoice object
-      Date.parse(input.created_at.to_s).strftime('%A')
-    end
+  def total_matches(id)
+    count = @sales_engine.items_find_all_by_merchant_id(id).count
+  end
 
-    def find_top_days(day_occurance)
-      all_averages = day_occurance.values
-      s_dev = standard_deviance(all_averages)
-      mark = average_invoices_per_day + s_dev
-      top_days = []
-      day_occurance.each_pair do |day, invoices|
-        top_days << day if invoices > mark
-      end
-      top_days
+  def all_invoice_averages
+    @sales_engine.merchants_all.map do |merchant|
+      merchant.invoices.count
     end
+  end
 
-    def average_invoices_per_day
-      @sales_engine.invoices_all.count / 7
-    end
-
-    def grab(all_merchant_revenues, number = all_merchant_revenues.count)
-      revenues = all_merchant_revenues.map(&:keys)
-      if number > revenues.count
-        sorted   = revenues.sort
-        all      = sorted
-        sorted_merchants(all_merchant_revenues, all)
-      else
-        sorted   = revenues.sort
-        all      = sorted[-number..-1]
-        sorted_merchants(all_merchant_revenues, all)
-      end
-    end
-
-    def merchants_by_revenue(invoice_by_m)
-      merchant_revenues = []
-      invoice_by_m.each do |helpers|
-        total = 0
-        helpers.each do |helper|
-          total += helper.total
-        end
-        merchant_revenues << { total => helpers.first.merchant }
-      end
-      merchant_revenues
-    end
-
-    def total_matches(id)
-      count = @sales_engine.items_find_all_by_merchant_id(id).count
-      count
-    end
-
-    def all_invoice_averages
-      @sales_engine.merchants_all.map do |merchant|
-        merchant.invoices.count
-      end
-    end
-
-    def invoices_by_merchant
-      @sales_engine.merchants_all.map(&:invoices)
-    end
-
-    def list_avg_merch(in_set)
-      in_set.map do |merchant|
-        average_item_price_for_merchant(merchant.id)
-      end
-    end
-
-    def all_merchant_averages
-      repo = @sales_engine.merchants_all
-      average_set = []
-      repo.each do |merchant|
-        average_set << { count: total_matches(merchant.id), merchant: merchant }
-      end
-      average_set
-    end
-
-    def merchant_revenue_by_item(merchant_id)
-      merchant = @sales_engine.merchant_find_by_id(merchant_id)
-      items    = merchant.items
-      item_revenues = Hash.new(0)
-      items.each do |item|
-        item_revenues[item.id] = item_tot_revenue(item.id)
-      end
-      item_revenues
-    end
+  def invoices_by_merchant
+    @sales_engine.merchants_all.map(&:invoices)
+  end
+  
 end
