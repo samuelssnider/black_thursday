@@ -135,6 +135,12 @@ class SalesAnalyst
     grab(merchants_by_revenue(invoices_by_merchant))
   end
 
+  def revenue_by_merchant(merchant_id)
+    merchants_by_revenue(invoices_by_merchant).find do |rev_merch|
+      rev_merch.values.first.id == merchant_id
+    end.keys.first
+  end
+
   def merchant_revenue_by_item(merchant_id)
     merchant = @sales_engine.merchant_find_by_id(merchant_id)
     items    = merchant.items
