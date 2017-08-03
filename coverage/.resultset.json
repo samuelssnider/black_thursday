@@ -24,6 +24,10 @@
         11,
         null,
         null,
+        1,
+        5,
+        null,
+        null,
         null
       ],
       "/Users/samuelsnider/turing/1module/black_thursday/test/customer_repository_test.rb": [
@@ -2459,6 +2463,6 @@
         null
       ]
     },
-    "timestamp": 1501734430
+    "timestamp": 1501770233
   }
 }
