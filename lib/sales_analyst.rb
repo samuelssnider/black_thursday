@@ -202,36 +202,8 @@ class SalesAnalyst
 
   private
 
-    def convert_date(input) # expected input: invoice object
-      Date.parse(input.created_at.to_s).strftime('%A')
-    end
-
-    def find_top_days(day_occurance)
-      all_averages = day_occurance.values
-      s_dev = standard_deviance(all_averages)
-      mark = average_invoices_per_day + s_dev
-      top_days = []
-      day_occurance.each_pair do |day, invoices|
-        top_days << day if invoices > mark
-      end
-      top_days
-    end
-
     def average_invoices_per_day
       @sales_engine.invoices_all.count / 7
-    end
-
-    def grab(all_merchant_revenues, number = all_merchant_revenues.count)
-      revenues = all_merchant_revenues.map(&:keys)
-      if number > revenues.count
-        sorted   = revenues.sort
-        all      = sorted
-        sorted_merchants(all_merchant_revenues, all)
-      else
-        sorted   = revenues.sort
-        all      = sorted[-number..-1]
-        sorted_merchants(all_merchant_revenues, all)
-      end
     end
 
     def total_matches(id)
