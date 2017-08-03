@@ -26,7 +26,22 @@ module DataManipulator
     merchants.flatten
   end
 
+  def list_avg_merch(in_set)
+    in_set.map do |merchant|
+      average_item_price_for_merchant(merchant.id)
+    end
+  end
 
-
+  def merchants_by_revenue(invoices_by_merchants)
+    merchant_revenues = []
+    invoices_by_merchants.each do |invoices|
+      total = 0
+      invoices.each do |invoice|
+        total += invoice.total
+      end
+      merchant_revenues << { total => invoices.first.merchant }
+    end
+    merchant_revenues
+  end
 
 end

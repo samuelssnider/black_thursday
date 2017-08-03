@@ -42,7 +42,7 @@ class SalesAnalyst
 
   def average_invoices_per_merchant_standard_deviation
     standard_deviance(all_invoice_averages).round(2)
-  end 
+  end
 
   def merchants_with_high_item_count
     s_dev         = average_items_per_merchant_standard_deviation
@@ -234,18 +234,6 @@ class SalesAnalyst
       end
     end
 
-    def merchants_by_revenue(invoice_by_m)
-      merchant_revenues = []
-      invoice_by_m.each do |helpers|
-        total = 0
-        helpers.each do |helper|
-          total += helper.total
-        end
-        merchant_revenues << { total => helpers.first.merchant }
-      end
-      merchant_revenues
-    end
-
     def total_matches(id)
       count = @sales_engine.items_find_all_by_merchant_id(id).count
     end
@@ -260,16 +248,9 @@ class SalesAnalyst
       @sales_engine.merchants_all.map(&:invoices)
     end
 
-    def list_avg_merch(in_set)
-      in_set.map do |merchant|
-        average_item_price_for_merchant(merchant.id)
-      end
-    end
-
-
-    def merchant_revenue_by_item(merchant_id)
-      merchant = @sales_engine.merchant_find_by_id(merchant_id)
-      items    = merchant.items
-      revenue_by_item(items)
-    end
+    # def merchant_revenue_by_item(merchant_id)
+    #   merchant = @sales_engine.merchant_find_by_id(merchant_id)
+    #   items    = merchant.items
+    #   revenue_by_item(items)
+    # end
 end
